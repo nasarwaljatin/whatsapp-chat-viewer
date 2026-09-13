@@ -1,0 +1,229 @@
+/* Upload & Drag and Drop Screen Styles */
+
+.upload-screen {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at 50% 20%, rgba(0, 168, 132, 0.15) 0%, transparent 60%),
+              var(--wa-bg-color);
+  padding: 24px;
+  position: relative;
+  overflow-y: auto;
+}
+
+.upload-header-bar {
+  position: absolute;
+  top: 20px;
+  right: 24px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.theme-toggle-btn {
+  background: var(--wa-panel-bg);
+  border: 1px solid var(--wa-border-color);
+  color: var(--wa-text-primary);
+  padding: 8px 14px;
+  border-radius: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px var(--wa-shadow);
+}
+
+.theme-toggle-btn:hover {
+  background: var(--wa-hover-bg);
+  transform: translateY(-1px);
+}
+
+.upload-card {
+  background: var(--wa-panel-bg);
+  border: 1px solid var(--wa-border-color);
+  border-radius: 24px;
+  padding: 48px 36px;
+  max-width: 540px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 20px 40px var(--wa-shadow);
+  animation: fadeIn 0.4s ease-out;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.app-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.app-brand svg {
+  width: 48px;
+  height: 48px;
+  color: #25d366;
+}
+
+.app-brand h1 {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--wa-text-primary);
+}
+
+.app-tagline {
+  font-size: 14px;
+  color: var(--wa-text-secondary);
+  margin-bottom: 32px;
+  line-height: 1.5;
+}
+
+.drop-zone {
+  width: 100%;
+  border: 2px dashed var(--wa-accent);
+  border-radius: 16px;
+  padding: 36px 20px;
+  background: rgba(0, 168, 132, 0.04);
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  position: relative;
+}
+
+.drop-zone:hover, .drop-zone.drag-over {
+  background: rgba(0, 168, 132, 0.1);
+  border-color: #25d366;
+  transform: scale(1.01);
+}
+
+.drop-zone-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: rgba(0, 168, 132, 0.15);
+  color: var(--wa-accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 4px;
+}
+
+.drop-zone-icon svg {
+  width: 28px;
+  height: 28px;
+}
+
+.drop-zone-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--wa-text-primary);
+}
+
+.drop-zone-subtitle {
+  font-size: 13px;
+  color: var(--wa-text-secondary);
+}
+
+.file-input {
+  display: none;
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+  margin: 24px 0;
+  color: var(--wa-text-secondary);
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.divider::before, .divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--wa-border-color);
+}
+
+.demo-btn {
+  width: 100%;
+  padding: 12px 20px;
+  border-radius: 12px;
+  border: 1px solid var(--wa-border-color);
+  background: var(--wa-input-bg);
+  color: var(--wa-text-primary);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: all 0.2s ease;
+}
+
+.demo-btn:hover {
+  background: var(--wa-accent);
+  color: #ffffff;
+  border-color: var(--wa-accent);
+}
+
+.privacy-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 24px;
+  font-size: 12px;
+  color: var(--wa-timestamp);
+  background: rgba(134, 150, 160, 0.08);
+  padding: 8px 16px;
+  border-radius: 20px;
+}
+
+.privacy-badge svg {
+  width: 14px;
+  height: 14px;
+  color: var(--wa-accent);
+}
+
+/* Loading Overlay */
+.loading-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(11, 20, 26, 0.8);
+  backdrop-filter: blur(4px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  z-index: 100;
+  border-radius: 24px;
+  color: #ffffff;
+}
+
+.spinner {
+  width: 44px;
+  height: 44px;
+  border: 4px solid rgba(255, 255, 255, 0.2);
+  border-top-color: var(--wa-accent);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}

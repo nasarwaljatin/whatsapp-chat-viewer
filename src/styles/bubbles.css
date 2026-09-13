@@ -1,0 +1,170 @@
+/* WhatsApp Message Bubbles, System Pills & Date Separators */
+
+/* Message Row */
+.msg-row {
+  display: flex;
+  margin-bottom: 2px;
+  width: 100%;
+  position: relative;
+}
+
+.msg-row.sent {
+  justify-content: flex-end;
+}
+
+.msg-row.received {
+  justify-content: flex-start;
+}
+
+.msg-row.highlighted .msg-bubble {
+  animation: pulseGlow 1.5s ease;
+  border: 1px solid var(--wa-accent);
+}
+
+/* Message Bubble Shell */
+.msg-bubble {
+  max-width: 85%;
+  min-width: 90px;
+  padding: 6px 10px 8px 10px;
+  border-radius: 7.5px;
+  position: relative;
+  box-shadow: 0 1px 0.5px var(--wa-shadow);
+  word-wrap: break-word;
+  white-space: pre-wrap;
+  font-size: 14.2px;
+  line-height: 19px;
+  animation: fadeIn 0.15s ease-out;
+}
+
+@media (min-width: 768px) {
+  .msg-bubble {
+    max-width: 65%;
+  }
+}
+
+.msg-row.sent .msg-bubble {
+  background-color: var(--wa-sent-bubble);
+  color: var(--wa-sent-bubble-text);
+  border-top-right-radius: 0px;
+}
+
+.msg-row.received .msg-bubble {
+  background-color: var(--wa-received-bubble);
+  color: var(--wa-received-bubble-text);
+  border-top-left-radius: 0px;
+}
+
+/* Bubble SVG Tails */
+.bubble-tail {
+  position: absolute;
+  top: 0;
+  width: 8px;
+  height: 13px;
+}
+
+.msg-row.sent .bubble-tail {
+  right: -8px;
+  fill: var(--wa-sent-bubble);
+}
+
+.msg-row.received .bubble-tail {
+  left: -8px;
+  fill: var(--wa-received-bubble);
+}
+
+/* Sender Name for Group Chats */
+.sender-name {
+  font-size: 12.8px;
+  font-weight: 600;
+  line-height: 16px;
+  margin-bottom: 3px;
+  cursor: pointer;
+}
+
+/* Message Content Text */
+.msg-text {
+  font-weight: 400;
+}
+
+.msg-text mark {
+  background-color: rgba(255, 235, 59, 0.4);
+  color: inherit;
+  border-radius: 2px;
+  padding: 0 2px;
+}
+
+/* Bubble Metadata (Timestamp + Read Ticks) */
+.msg-meta {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  float: right;
+  margin-left: 12px;
+  margin-top: 4px;
+  user-select: none;
+}
+
+.timestamp {
+  font-size: 11px;
+  color: var(--wa-timestamp);
+  vertical-align: middle;
+}
+
+.ticks {
+  display: inline-flex;
+  align-items: center;
+  color: var(--wa-tick-color);
+}
+
+.ticks svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* Date Separators */
+.date-separator {
+  display: flex;
+  justify-content: center;
+  margin: 12px 0;
+  width: 100%;
+}
+
+.date-badge {
+  background-color: var(--wa-date-badge-bg);
+  color: var(--wa-date-badge-text);
+  font-size: 12.5px;
+  font-weight: 500;
+  padding: 5px 12px;
+  border-radius: 7.5px;
+  box-shadow: 0 1px 0.5px var(--wa-shadow);
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+/* System Messages (Encryption, Group Info) */
+.system-msg-row {
+  display: flex;
+  justify-content: center;
+  margin: 8px 0;
+  width: 100%;
+}
+
+.system-badge {
+  background-color: var(--wa-system-bg);
+  color: var(--wa-system-text);
+  font-size: 12.5px;
+  padding: 6px 14px;
+  border-radius: 7.5px;
+  text-align: center;
+  max-width: 85%;
+  box-shadow: 0 1px 0.5px var(--wa-shadow);
+  line-height: 16px;
+}
+
+.system-badge svg {
+  width: 13px;
+  height: 13px;
+  vertical-align: -2px;
+  margin-right: 4px;
+  color: #ffd279;
+}
