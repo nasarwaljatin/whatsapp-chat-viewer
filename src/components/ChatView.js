@@ -106,6 +106,51 @@ export function createChatView({ chatData, currentTheme, onBack, onThemeToggle }
   const messagesListContainer = document.createElement('div');
   messagesListContainer.className = 'messages-container';
 
+  // Floating Sticky Date Badge
+  const floatingDateWrapper = document.createElement('div');
+  floatingDateWrapper.className = 'floating-date-wrapper';
+  const floatingDateBadge = document.createElement('span');
+  floatingDateBadge.className = 'floating-date-badge';
+  floatingDateWrapper.appendChild(floatingDateBadge);
+  messagesListContainer.appendChild(floatingDateWrapper);
+
+  let floatingDateHideTimer = null;
+
+  function updateFloatingDate() {
+    const dateSeps = messagesListContainer.querySelectorAll('.date-separator');
+    if (dateSeps.length === 0) {
+      floatingDateBadge.classList.remove('visible');
+      return;
+    }
+
+    const containerTop = messagesListContainer.getBoundingClientRect().top;
+    let currentDateText = '';
+
+    // Find the last date separator that has scrolled past (or is at) the top
+    for (const sep of dateSeps) {
+      const sepTop = sep.getBoundingClientRect().top;
+      if (sepTop <= containerTop + 40) {
+        const badge = sep.querySelector('.date-badge');
+        if (badge) currentDateText = badge.textContent;
+      } else {
+        break;
+      }
+    }
+
+    if (currentDateText) {
+      floatingDateBadge.textContent = currentDateText;
+      floatingDateBadge.classList.add('visible');
+
+      // Auto-hide after scrolling stops
+      clearTimeout(floatingDateHideTimer);
+      floatingDateHideTimer = setTimeout(() => {
+        floatingDateBadge.classList.remove('visible');
+      }, 1500);
+    } else {
+      floatingDateBadge.classList.remove('visible');
+    }
+  }
+
   // Scroll to bottom FAB
   const fab = document.createElement('button');
   fab.className = 'scroll-bottom-fab';
@@ -129,6 +174,7 @@ export function createChatView({ chatData, currentTheme, onBack, onThemeToggle }
     } else {
       fab.classList.remove('visible');
     }
+    updateFloatingDate();
   });
 
   bodyWrapper.appendChild(messagesListContainer);
@@ -189,6 +235,9 @@ export function createChatView({ chatData, currentTheme, onBack, onThemeToggle }
 
   function renderMessages() {
     messagesListContainer.innerHTML = '';
+    // Re-add floating date wrapper after clearing
+    messagesListContainer.appendChild(floatingDateWrapper);
+    floatingDateBadge.classList.remove('visible');
     let lastDateStr = '';
 
     const filtered = getFilteredMessages();

@@ -121,6 +121,39 @@
   height: 16px;
 }
 
+/* Floating Sticky Date Badge */
+.floating-date-wrapper {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  display: flex;
+  justify-content: center;
+  pointer-events: none;
+  height: 0;
+  overflow: visible;
+}
+
+.floating-date-badge {
+  background-color: var(--wa-date-badge-bg);
+  color: var(--wa-date-badge-text);
+  font-size: 12.5px;
+  font-weight: 500;
+  padding: 5px 12px;
+  border-radius: 7.5px;
+  box-shadow: 0 1px 3px var(--wa-shadow);
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  margin-top: 4px;
+  opacity: 0;
+  transform: translateY(-8px);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.floating-date-badge.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 /* Date Separators */
 .date-separator {
   display: flex;
