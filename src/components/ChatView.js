@@ -124,20 +124,39 @@ export function createChatView({ chatData, currentTheme, onBack, onThemeToggle }
     }
 
     const containerTop = messagesListContainer.getBoundingClientRect().top;
+    const containerBottom = messagesListContainer.getBoundingClientRect().bottom;
     let currentDateText = '';
+    let lastScrolledOutSep = null;
 
-    // Find the last date separator that has scrolled past (or is at) the top
+    // Find the last date separator whose bottom has scrolled above the container top
     for (const sep of dateSeps) {
-      const sepTop = sep.getBoundingClientRect().top;
-      if (sepTop <= containerTop + 40) {
+      const sepBottom = sep.getBoundingClientRect().bottom;
+      if (sepBottom < containerTop) {
+        // This separator is fully scrolled out above the viewport
         const badge = sep.querySelector('.date-badge');
-        if (badge) currentDateText = badge.textContent;
-      } else {
-        break;
+        if (badge) {
+          currentDateText = badge.textContent;
+          lastScrolledOutSep = sep;
+        }
       }
     }
 
-    if (currentDateText) {
+    // Check if ANY date separator is currently visible inside the viewport
+    let anyDateVisibleInViewport = false;
+    for (const sep of dateSeps) {
+      const sepRect = sep.getBoundingClientRect();
+      if (sepRect.bottom > containerTop && sepRect.top < containerBottom) {
+        // Check if it's near the top (within first ~60px of the visible area)
+        if (sepRect.top < containerTop + 60) {
+          anyDateVisibleInViewport = true;
+          break;
+        }
+      }
+    }
+
+    // Only show floating date when a separator scrolled out AND
+    // no inline date separator is visible near the top
+    if (currentDateText && !anyDateVisibleInViewport) {
       floatingDateBadge.textContent = currentDateText;
       floatingDateBadge.classList.add('visible');
 
@@ -148,6 +167,7 @@ export function createChatView({ chatData, currentTheme, onBack, onThemeToggle }
       }, 1500);
     } else {
       floatingDateBadge.classList.remove('visible');
+      clearTimeout(floatingDateHideTimer);
     }
   }
 
