@@ -2,9 +2,16 @@
 
 > Upload your exported WhatsApp chat `.zip` file and relive your conversations in a pixel-perfect WhatsApp-style UI — complete with images, media, timestamps, and the authentic look & feel.
 
-![Status](https://img.shields.io/badge/Status-In%20Development-yellow)
+![Status](https://img.shields.io/badge/Status-Live-brightgreen)
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-Vercel-000000?style=flat&logo=vercel&logoColor=white)](https://whatsapp-chat-viewer-eosin-nine.vercel.app)
 ![License](https://img.shields.io/badge/License-MIT-blue)
 ![Platform](https://img.shields.io/badge/Platform-Web-green)
+
+---
+
+## 🌐 Live Demo
+
+🔗 **[https://whatsapp-chat-viewer-eosin-nine.vercel.app](https://whatsapp-chat-viewer-eosin-nine.vercel.app)**
 
 ---
 
@@ -125,66 +132,60 @@ The `_chat.txt` file follows this pattern (varies slightly by OS/locale):
 ### Phase 1: Foundation 🏠
 > *Core infrastructure and project setup*
 
-- [ ] Initialize Vite project with vanilla JS
-- [ ] Set up project structure (components, utils, styles)
-- [ ] Create landing/upload page with drag-and-drop zone
-- [ ] Implement ZIP file extraction using JSZip
-- [ ] Build chat text parser with regex (handle multiple date formats)
-- [ ] Create data model for parsed messages
+- [x] Initialize Vite project with vanilla JS
+- [x] Set up project structure (components, utils, styles)
+- [x] Create landing/upload page with drag-and-drop zone
+- [x] Implement ZIP file extraction using JSZip
+- [x] Build chat text parser with regex (handle multiple date formats)
+- [x] Create data model for parsed messages
 
 ### Phase 2: WhatsApp UI Replica 💬
 > *Pixel-perfect recreation of the WhatsApp interface*
 
-- [ ] **Chat Header** — Contact name/group name, avatar, online status bar
-- [ ] **Message Bubbles** — Sent (green) vs Received (white) with proper tails
-- [ ] **Timestamps** — Per-message timestamps in WhatsApp style (bottom-right of bubble)
-- [ ] **Date Separators** — "Today", "Yesterday", "DD/MM/YYYY" divider pills
-- [ ] **Chat Background** — WhatsApp doodle wallpaper pattern
-- [ ] **System Messages** — "Messages are end-to-end encrypted", "X joined", etc.
-- [ ] **Message Input Bar** — Static decorative input bar at the bottom (non-functional)
-- [ ] **Scrollbar Styling** — Thin, WhatsApp-style custom scrollbar
+- [x] **Chat Header** — Contact name/group name, avatar, online status bar
+- [x] **Message Bubbles** — Sent (green) vs Received (white) with proper tails
+- [x] **Timestamps** — Per-message timestamps in WhatsApp style (bottom-right of bubble)
+- [x] **Date Separators** — "Today", "Yesterday", "DD/MM/YY" divider pills
+- [x] **Chat Background** — WhatsApp doodle wallpaper pattern
+- [x] **System Messages** — "Messages are end-to-end encrypted", "X joined", etc.
+- [x] **Message Input Bar** — Static decorative input bar at the bottom (non-functional)
+- [x] **Scrollbar Styling** — Thin, WhatsApp-style custom scrollbar
 
 ### Phase 3: Media Integration 🖼️
 > *Display images, videos, and other media inline*
 
-- [ ] **Image Messages** — Display images inline with thumbnail + lightbox viewer
-- [ ] **Video Messages** — Video player with play button overlay (WhatsApp style)
-- [ ] **Audio/Voice Notes** — Waveform-style audio player
-- [ ] **Stickers** — Display `.webp` stickers with transparent background
-- [ ] **Documents** — File attachment cards with icon, name, size
-- [ ] **Media-to-Message Mapping** — Correctly associate media files with their timeline position
+- [x] **Image Messages** — Display images inline with thumbnail + lightbox viewer
+- [x] **Video Messages** — Video player with play button overlay (WhatsApp style)
+- [x] **Audio/Voice Notes** — Waveform-style audio player
+- [x] **Stickers** — Display `.webp` stickers with transparent background
+- [x] **Documents** — File attachment cards with icon, name, size
+- [x] **Media-to-Message Mapping** — Correctly associate media files with their timeline position
 
 ### Phase 4: Group Chat Support 👥
 > *Handle multi-participant conversations*
 
-- [ ] Detect group vs individual chat from the export
-- [ ] Assign distinct colors to each participant's name
-- [ ] Show sender name above message bubble (group chat only)
-- [ ] Participant avatar generation (initials-based or identicon)
+- [x] Detect group vs individual chat from the export
+- [x] Assign distinct colors to each participant's name
+- [x] Show sender name above message bubble (group chat only)
+- [x] Participant avatar generation (initials-based or identicon)
 
 ### Phase 5: Polish & UX ✨
 > *Elevate the experience to premium quality*
 
-- [ ] **Dark Mode / Light Mode** toggle (WhatsApp has both)
-- [ ] **Search** — Search through messages with highlight
-- [ ] **Jump to Date** — Date picker to jump to specific dates in the chat
-- [ ] **Lazy Loading / Virtualization** — Handle chats with 50k+ messages smoothly
-- [ ] **Smooth Scroll** — Momentum scrolling with "scroll to bottom" FAB
-- [ ] **Loading Animation** — Skeleton screens while parsing
-- [ ] **Responsive Design** — Mobile-friendly layout
-- [ ] **Keyboard Shortcuts** — Navigate with keyboard
-- [ ] **Export / Screenshot** — Save rendered chat sections as images
+- [x] **Dark Mode / Light Mode** toggle (WhatsApp has both)
+- [x] **Search** — Search through messages with highlight and context jump
+- [x] **Jump to Date** — Date picker to jump to specific dates in the chat
+- [x] **Smooth Scroll** — Momentum scrolling with "scroll to bottom" FAB
+- [x] **Loading Animation** — Skeleton screens while parsing
+- [x] **Responsive Design** — Mobile-friendly layout
 
 ### Phase 6: Advanced Features 🔬
 > *Nice-to-have features for power users*
 
-- [ ] **Chat Statistics** — Message count, most active hours, emoji usage, word clouds
-- [ ] **Multi-Chat Support** — Upload multiple ZIPs, switch between chats (sidebar)
-- [ ] **Emoji Rendering** — Native emoji with proper sizing
-- [ ] **Link Previews** — Detect URLs and show them as clickable links
-- [ ] **Reply/Quote Messages** — Detect and render quoted messages
-- [ ] **Starred Messages** — Filter/highlight important messages
-- [ ] **PWA Support** — Install as a standalone app
+- [x] **Chat Statistics** — Message count, active days, emoji usage, charts
+- [x] **Reply/Quote Messages** — Detect and render quoted messages
+- [x] **Starred Messages** — Filter/highlight important messages
+- [x] **Media & Docs Drawer** — Tabbed gallery view with photos, audio, and files
 
 ---
 
