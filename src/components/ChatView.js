@@ -146,11 +146,8 @@ export function createChatView({ chatData, currentTheme, onBack, onThemeToggle }
     for (const sep of dateSeps) {
       const sepRect = sep.getBoundingClientRect();
       if (sepRect.bottom > containerTop && sepRect.top < containerBottom) {
-        // Check if it's near the top (within first ~60px of the visible area)
-        if (sepRect.top < containerTop + 60) {
-          anyDateVisibleInViewport = true;
-          break;
-        }
+        anyDateVisibleInViewport = true;
+        break;
       }
     }
 
