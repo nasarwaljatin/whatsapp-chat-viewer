@@ -1,8 +1,8 @@
 /**
- * Main Application Controller & State Coordinator
+ * Main Application Controller & State Coordinator (Multi-Chat enabled)
  */
 import { createUploadScreen, showLoadingSpinner, hideLoadingSpinner } from './components/UploadScreen.js';
-import { createChatView } from './components/ChatView.js';
+import { createChatAppLayout } from './components/ChatAppLayout.js';
 import { extractWhatsAppZip } from './parser/zipExtractor.js';
 import { generateSampleChat } from './utils/sampleChat.js';
 
@@ -11,7 +11,8 @@ class App {
     this.appMount = document.getElementById('app');
     this.currentTheme = localStorage.getItem('wa_theme') || 'dark';
     this.currentScreen = 'upload'; // 'upload' | 'chat'
-    this.chatData = null;
+    this.sessions = [];
+    this.activeSessionId = null;
 
     this.applyTheme(this.currentTheme);
     this.render();
@@ -28,30 +29,56 @@ class App {
     this.applyTheme(newTheme);
   }
 
-  async handleFileUpload(zipFile) {
+  async handleFileUpload(zipFiles) {
     try {
-      showLoadingSpinner(this.appMount, 'Extracting & Parsing WhatsApp ZIP...');
-      const extractedData = await extractWhatsAppZip(zipFile);
-      this.chatData = extractedData;
+      showLoadingSpinner(this.appMount, 'Extracting & Parsing WhatsApp ZIP(s)...');
+      const newSessions = await extractWhatsAppZip(zipFiles);
+      
+      // Combine with existing sessions if any
+      this.sessions = [...this.sessions, ...newSessions];
+      if (!this.activeSessionId || !this.sessions.find(s => s.id === this.activeSessionId)) {
+        this.activeSessionId = this.sessions[0].id;
+      }
+      
       this.currentScreen = 'chat';
       this.render();
     } catch (err) {
       console.error(err);
-      alert(`Error parsing WhatsApp ZIP file:\n${err.message}`);
+      alert(`Error parsing WhatsApp ZIP file(s):\n${err.message}`);
     } finally {
       hideLoadingSpinner(this.appMount);
     }
   }
 
   handleDemoUpload() {
-    this.chatData = generateSampleChat();
+    this.sessions = generateSampleChat();
+    this.activeSessionId = this.sessions[0].id;
     this.currentScreen = 'chat';
     this.render();
   }
 
+  handleSelectSession(sessionId) {
+    this.activeSessionId = sessionId;
+    this.render();
+  }
+
+  handleAddMoreZip() {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = '.zip';
+    input.multiple = true;
+    input.onchange = (e) => {
+      if (e.target.files && e.target.files.length > 0) {
+        this.handleFileUpload(Array.from(e.target.files));
+      }
+    };
+    input.click();
+  }
+
   handleBackToUpload() {
     this.currentScreen = 'upload';
-    this.chatData = null;
+    this.sessions = [];
+    this.activeSessionId = null;
     this.render();
   }
 
@@ -60,20 +87,23 @@ class App {
 
     if (this.currentScreen === 'upload') {
       const uploadElem = createUploadScreen({
-        onFileSelected: (file) => this.handleFileUpload(file),
+        onFilesSelected: (files) => this.handleFileUpload(files),
         onDemoSelected: () => this.handleDemoUpload(),
         currentTheme: this.currentTheme,
         onThemeToggle: () => this.toggleTheme()
       });
       this.appMount.appendChild(uploadElem);
-    } else if (this.currentScreen === 'chat' && this.chatData) {
-      const chatElem = createChatView({
-        chatData: this.chatData,
+    } else if (this.currentScreen === 'chat' && this.sessions.length > 0) {
+      const chatLayoutElem = createChatAppLayout({
+        sessions: this.sessions,
+        activeSessionId: this.activeSessionId,
         currentTheme: this.currentTheme,
-        onBack: () => this.handleBackToUpload(),
+        onSelectSession: (id) => this.handleSelectSession(id),
+        onAddZip: () => this.handleAddMoreZip(),
+        onBackToLanding: () => this.handleBackToUpload(),
         onThemeToggle: () => this.toggleTheme()
       });
-      this.appMount.appendChild(chatElem);
+      this.appMount.appendChild(chatLayoutElem);
     }
   }
 }

@@ -2,7 +2,7 @@
  * Landing Page & File Upload Screen Component
  */
 
-export function createUploadScreen({ onFileSelected, onDemoSelected, currentTheme, onThemeToggle }) {
+export function createUploadScreen({ onFilesSelected, onDemoSelected, currentTheme, onThemeToggle }) {
   const container = document.createElement('div');
   container.className = 'upload-screen';
 
@@ -24,7 +24,7 @@ export function createUploadScreen({ onFileSelected, onDemoSelected, currentThem
         <h1>WhatsApp Chat Viewer</h1>
       </div>
       <p class="app-tagline">
-        Relive your exported WhatsApp chats in authentic WhatsApp UI with full image, video & media timeline support.
+        Relive your exported WhatsApp chats in authentic WhatsApp Web UI with multi-chat sidebar, images, video & timeline support.
       </p>
 
       <div class="drop-zone" id="drop-zone">
@@ -35,9 +35,9 @@ export function createUploadScreen({ onFileSelected, onDemoSelected, currentThem
             <line x1="12" y1="3" x2="12" y2="15"></line>
           </svg>
         </div>
-        <div class="drop-zone-title">Drop your WhatsApp export .ZIP file here</div>
-        <div class="drop-zone-subtitle">or click to browse your computer</div>
-        <input type="file" id="file-input" class="file-input" accept=".zip" />
+        <div class="drop-zone-title">Drop your WhatsApp export .ZIP file(s) here</div>
+        <div class="drop-zone-subtitle">or click to browse your computer (select one or multiple ZIPs)</div>
+        <input type="file" id="file-input" class="file-input" accept=".zip" multiple />
       </div>
 
       <div class="divider">OR</div>
@@ -46,7 +46,7 @@ export function createUploadScreen({ onFileSelected, onDemoSelected, currentThem
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <polygon points="5 3 19 12 5 21 5 3"></polygon>
         </svg>
-        Try Interactive Demo Chat
+        Try Interactive Multi-Chat Demo
       </button>
 
       <div class="privacy-badge">
@@ -84,18 +84,18 @@ export function createUploadScreen({ onFileSelected, onDemoSelected, currentThem
     e.preventDefault();
     dropZone.classList.remove('drag-over');
     if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
-      const file = e.dataTransfer.files[0];
-      if (file.name.endsWith('.zip')) {
-        onFileSelected(file);
+      const files = Array.from(e.dataTransfer.files).filter(f => f.name.endsWith('.zip'));
+      if (files.length > 0) {
+        onFilesSelected(files);
       } else {
-        alert('Please select a valid WhatsApp exported .ZIP file.');
+        alert('Please select valid WhatsApp exported .ZIP file(s).');
       }
     }
   });
 
   fileInput.addEventListener('change', (e) => {
     if (e.target.files && e.target.files.length > 0) {
-      onFileSelected(e.target.files[0]);
+      onFilesSelected(Array.from(e.target.files));
     }
   });
 
@@ -105,7 +105,7 @@ export function createUploadScreen({ onFileSelected, onDemoSelected, currentThem
   return container;
 }
 
-export function showLoadingSpinner(container, text = 'Parsing WhatsApp Chat ZIP...') {
+export function showLoadingSpinner(container, text = 'Parsing WhatsApp Chat ZIP(s)...') {
   let overlay = container.querySelector('.loading-overlay');
   if (!overlay) {
     overlay = document.createElement('div');
